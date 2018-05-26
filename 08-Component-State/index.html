@@ -1,0 +1,72 @@
+<body>
+  <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  <div id="root"></div>
+  <script type="text/babel">
+    //props recebida pelo component, vem de fora
+    //state o component controla, vem de dentro 
+    class StopWatch extends React.Component {
+      //Stado local inicial
+      state = {
+        running: false,
+        lapse: 0
+      }
+
+      handleRunClick = () => {
+        const startTime = Date.now() - this.state.lapse
+        this.setState(state => {
+          if (this.state.running) {
+            clearInterval(this.timer)
+          } else {
+            this.timer = setInterval(() => {
+              this.setState({ lapse: Date.now() - startTime})
+            })
+          }
+          return { running: !this.state.running }
+        })
+      }
+
+      handleRunClearClick = () => {
+        clearInterval(this.timer)
+        this.setState({ lapse: 0, running: false })
+      }
+      //Metodo render obrigatório em toda class do React
+      render() {
+        const { lapse, running } = this.state
+        const buttonStyles = {
+          border: '1px solid #ccc',
+          background: running ? 'red' : 'green',
+          fontSize: '2em',
+          cursor: 'pointer',
+          padding: 15,
+          margin: 5,
+          width: 200,
+          borderRadius: 35,
+      }
+      const cancel = {
+        background: 'white',
+      }
+        return (
+          <div style={{textAlign: 'center'}}>
+            <label
+              style={{
+                fontSize: '5em',
+                display: 'block'
+              }}
+            >
+              {lapse}ms
+            </label>
+            <button style={buttonStyles} onClick={this.handleRunClick}>{running ? 'Stop' : 'Start'}</button>
+            <button style={{...buttonStyles, ...cancel}} onClick={this.handleRunClearClick}>Clear</button>
+          </div>
+        )
+      }
+    }
+    const element = <StopWatch/>
+
+    ReactDOM.render(
+      element, document.getElementById('root')
+    )
+  </script> 
+</body>

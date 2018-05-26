@@ -1,0 +1,18 @@
+<body>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.getElementById('root')
+        const className = 'container'
+        const props = {
+            className: 'container',
+            children: 'Hello World of Developers'
+        }
+        //Object.Assign (Sempre prioriza o ultimo elemento. Em dev client side, sempre da direita)
+        const element = <div {...props} className={`my-Class ${props.className}`}/>
+        ReactDOM.render(element, rootElement)
+        console.log(element)
+    </script> 
+</body>
